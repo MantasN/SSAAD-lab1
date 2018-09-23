@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TODO's List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        body {
+            font-family: arial, sans-serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        <a href="/todo">Create new TODO</a>
+    </p>
+
+    <table th:object="${todos}">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Due date</th>
+            <th>Priority</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="todo :${todos}">
+            <td>
+                <a th:href="@{'/todo/' + ${todo.id}}" th:text="${todo.title}"></a>
+            </td>
+            <td th:text="${todo.description}"></td>
+            <td th:text="${todo.dueDate}"></td>
+            <td th:text="${todo.priority}"></td>
+            <td>
+                <form action="#" th:action="@{'/todo/' + ${todo.id}}" method="POST">
+                    <input type="submit" value="Delete"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

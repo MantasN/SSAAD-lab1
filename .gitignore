@@ -1,0 +1,17 @@
+*.class
+
+.idea
+*.iml
+.vertx
+/target
+/LOG_FOLDER_IS_UNDEFINED
+.classpath
+.project
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear

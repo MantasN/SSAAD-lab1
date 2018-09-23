@@ -1,0 +1,3 @@
+mongodb:
+  db: todo
+  uri: mongodb://localhost/${mongodb.db}

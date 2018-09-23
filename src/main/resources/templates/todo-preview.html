@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TODO Preview</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        body {
+            font-family: arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>TODO Details</h1>
+    <table>
+        <tr>
+            <td>Title:</td>
+            <td th:text="${todo.title}"></td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <td th:text="${todo.description}"></td>
+        </tr>
+        <tr>
+            <td>Due date:</td>
+            <td th:text="${todo.dueDate}"></td>
+        </tr>
+        <tr>
+            <td>Priority:</td>
+            <td th:text="${todo.priority}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="/">Show all TODO's</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="/todo">Create another TODO</a></td>
+        </tr>
+    </table>
+</body>
+</html>
