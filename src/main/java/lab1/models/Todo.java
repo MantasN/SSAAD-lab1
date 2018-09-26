@@ -1,14 +1,16 @@
 package lab1.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
+import lab1.repository.TodoRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.*;
 
 @Document
 public class Todo {
@@ -89,6 +91,30 @@ public class Todo {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, description, dueDate, priority);
+    }
+
+    public void delete(TodoRepo todoRepo) {
+        todoRepo.deleteBy(id);
+    }
+
+    public void persist(TodoRepo todoRepo) {
+        todoRepo.persist(this);
+    }
+
+    public static Optional<Todo> findBy(String id, TodoRepo todoRepo) {
+        return todoRepo.getBy(id);
+    }
+
+    public static List<Todo> findAll(TodoRepo todoRepo) {
+        return todoRepo.getAll();
+    }
+
+    public static Todo getNew() {
+        Todo newTodo = new Todo();
+        newTodo.id = UUID.randomUUID().toString();
+        newTodo.dueDate = LocalDate.now();
+
+        return newTodo;
     }
 
     public enum Priority {

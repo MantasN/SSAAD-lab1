@@ -24,24 +24,19 @@ public class TodoController {
 
     @GetMapping("/")
     public String getTodoList(Model model) {
-        model.addAttribute("todos", todoRepo.getAll());
+        model.addAttribute("todos", Todo.findAll(todoRepo));
         return "todo-list";
     }
 
     @GetMapping("/todo")
     public String getNewTodo(Model model) {
-        Todo newTodo = new Todo();
-        newTodo.id = UUID.randomUUID().toString();
-        newTodo.dueDate = LocalDate.now();
-
-        model.addAttribute("todo", newTodo);
+        model.addAttribute("todo", Todo.getNew());
         return "todo-form";
     }
 
     @GetMapping("/todo/{id}")
     public String getExistingTodo(@PathVariable String id, Model model) {
-        Todo todo = todoRepo
-                .getBy(id)
+        Todo todo = Todo.findBy(id, todoRepo)
                 .orElseThrow(() -> new RuntimeException("Can't find TODO for provided id!"));
 
         model.addAttribute("todo", todo);
@@ -50,8 +45,8 @@ public class TodoController {
 
     @PostMapping("/todo/{id}")
     public String deleteExistingTodo(@PathVariable String id, Model model) {
-        todoRepo.deleteBy(id);
-        model.addAttribute("todos", todoRepo.getAll());
+        Todo.findBy(id, todoRepo).ifPresent(t -> t.delete(todoRepo));
+        model.addAttribute("todos", Todo.findAll(todoRepo));
         return "todo-list";
     }
 
@@ -61,7 +56,7 @@ public class TodoController {
             return "todo-form";
         }
 
-        todoRepo.persist(todo);
+        todo.persist(todoRepo);
         return "todo-preview";
     }
 
